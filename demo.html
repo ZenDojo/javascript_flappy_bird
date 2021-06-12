@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" onclick="jump()">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flippy bird</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #game {
+            width: 400px;
+            height: 500px;
+            border: 1px solid black;
+            margin: auto;
+        }
+
+        #block {
+            width: 50px;
+            height: 500px;
+            background-color: black;
+            position: relative;
+            left: 400px;
+            animation: block 2s infinite linear;
+        }
+
+        @keyframes block {
+            0% {
+                left: 420px;
+            }
+
+            100% {
+                left: -50px;
+            }
+        }
+
+        #hole {
+            width: 50px;
+            height: 150px;
+            background-color: red;
+            position: relative;
+            left: 400px;
+            top: -500px;
+            animation: block 2s infinite linear;
+        }
+
+        #character {
+            width: 30px;
+            height: 30px;
+            /* background-color: red; */
+            position: absolute;
+            top: 100px;
+            background: url(./img/bird.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game">
+        <div id="block"></div>
+        <div id="hole"></div>
+        <div id="character"></div>
+    </div>
+
+    <script>
+        let block = document.querySelector('#block')
+        let hole = document.querySelector('#hole')
+        let character = document.querySelector('#character')
+        let jumping = 0
+        let scoreCounter = 0
+        hole.addEventListener('animationiteration', () => {
+            let random = -((Math.random() * 300) + 150)
+            hole.style.top = `${random}px`
+            scoreCounter++
+        })
+        setInterval(() => {
+            let characterTop = parseInt(window.getComputedStyle(character).getPropertyValue('top'))
+            if (jumping == 1) return
+            character.style.top = (characterTop + 3) + 'px'
+            let blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue('left'))
+            let holeTop = parseInt(window.getComputedStyle(hole).getPropertyValue('top'))
+            let cTop = -(500 - characterTop)
+            // if ((characterTop > 480) || ((blockLeft < 20) && (blockLeft > -50) && ((cTop < holeTop) || (cTop > holeTop + 120)))) {
+            if ((characterTop > 480) || ((blockLeft < 20) && (blockLeft > -50) && ((cTop < holeTop) || (cTop > holeTop + 120)))) {
+                alert(`Game Over. Score:${scoreCounter}`)
+                character.style.top = `100px`
+                scoreCounter = 0
+            }
+        }, 10);
+        function jump() {
+            jumping = 1
+            let jumpCount = 0
+            let jumpInterval = setInterval(() => {
+                let characterTop = parseInt(window.getComputedStyle(character).getPropertyValue('top'))
+                if ((characterTop > 6) && (jumpCount < 15)) {
+                    character.style.top = (characterTop - 5) + 'px'
+                }
+                if (jumpCount > 20) {
+                    clearInterval(jumpInterval)
+                    jumping = 0
+                }
+                jumpCount++
+            }, 10);
+        }
+    </script>
+</body>
+
+</html>

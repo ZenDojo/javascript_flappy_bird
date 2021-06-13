@@ -1,4 +1,4 @@
-@import url(//db.onlinewebfonts.com/c/b2e75c336df191233b3096682c9ee6be?family=PixelarRegularW01-Regular);
+/* @import url(//db.onlinewebfonts.com/c/b2e75c336df191233b3096682c9ee6be?family=PixelarRegularW01-Regular); */
 * {
     margin: 0;
     padding: 0;
@@ -44,7 +44,8 @@ body {
     color: rgb(255, 255, 74);
 }
 #gameoverscreen .title {
-    margin-top: -65px;
+    /* margin-top: -65px; */
+    margin: -140px 0px;
     font-size: 50px;
 }
 #gameoverscreen button {
